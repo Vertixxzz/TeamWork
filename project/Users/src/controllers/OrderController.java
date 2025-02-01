@@ -8,8 +8,7 @@ import controllers.interfaces.IOrderController;
 import java.util.List;
 
 /**
- * Контроллер для управления заказами.
- * Связывает репозиторий и модель заказа.
+ * тут заказы связывать с репо
  */
 public class OrderController implements IOrderController {
     private final IOrderRepository orderRepository;
