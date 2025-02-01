@@ -10,7 +10,7 @@ import java.util.List;
 public class OrderRepository {
 
     // ааа вонючией постгреsql
-    private static final String URL = "jdbc:postgresql://localhost:5432/ВАША_БАЗА";
+    private static final String URL = "jdbc:postgresql://localhost:5432/restaurant";
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
 
@@ -18,7 +18,7 @@ public class OrderRepository {
         String insertOrderSQL = "INSERT INTO orders (customer_name, total_price) VALUES (?, ?) RETURNING id";
         String insertItemSQL = "INSERT INTO order_items (order_id, item_name, item_price) VALUES (?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, localhost, vertix);
+        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/restaurant","postgres","vertix");
              PreparedStatement psOrder = conn.prepareStatement(insertOrderSQL);
              PreparedStatement psItem = conn.prepareStatement(insertItemSQL)) {
 
