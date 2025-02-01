@@ -5,8 +5,7 @@ import models.Order;
 import java.util.List;
 
 /**
- * Интерфейс для работы с заказами.
- * Определяет методы для добавления, получения, обновления и удаления заказов.
+ *тут заказы
  */
 public interface IOrderRepository {
     void addOrder(Order order);
