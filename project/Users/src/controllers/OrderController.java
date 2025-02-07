@@ -7,9 +7,7 @@ import controllers.interfaces.IOrderController;
 
 import java.util.List;
 
-/**
- * тут заказы связывать с репо
- */
+
 public class OrderController implements IOrderController {
     private final IOrderRepository orderRepository;
 
