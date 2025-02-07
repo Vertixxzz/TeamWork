@@ -6,10 +6,8 @@ import repositories.interfaces.IOrderRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Реализация репозитория для работы с заказами.
- * В реальном проекте здесь будет подключение к базе данных.
- */
+
+
 public class OrderRepository implements IOrderRepository {
     private final List<Order> orders = new ArrayList<>();
 
@@ -48,6 +46,7 @@ public class OrderRepository implements IOrderRepository {
         if (order != null) {
             orders.remove(order);
             System.out.println("Заказ удален: " + orderId);
+
         }
     }
 }
