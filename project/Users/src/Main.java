@@ -25,10 +25,12 @@ public class Main {
         JB database = new Postgre("jdbc:postgresql://localhost:5432/",
                 "postgres", "123456789", "users");
 
+
         IUserRepository repo = new UserRepository(database);
         ICourseRepository courseRepo = new CourseRepository(database);
         IRegistrationRepository regRepo = new RegistrationRepository(database);
         IAdminRepository adminRepo = new AdminRepository(database);
+
 
         UserController controller = new UserController(repo);
         CourseController courseController = new CourseController(courseRepo, repo);

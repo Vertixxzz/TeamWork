@@ -1,5 +1,6 @@
 package repositories.repositories;
 
+
 import data.interfaceces.IDB;
 import models.User;
 import repositories.interfaces.IUserRepository;
@@ -7,6 +8,7 @@ import repositories.interfaces.IUserRepository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class UserRepository implements IUserRepository {
     private final IDB db;

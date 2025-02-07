@@ -7,18 +7,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class PostgresDB implements IDB {
+
     private String host;
     private String username; 
     private String password; 
-    private String dbName; 
+    private String dbName;
+
 
     private Connection connection;
 
     public PostgresDB(String host, String username, String password, String dbName) {
+
         setHost(host);
         setUsername(username);
         setPassword(password);
         setDbName(dbName);
+
     }
 
     public String getHost() {

@@ -19,6 +19,7 @@ public class RegistrationController implements IRegistrationController {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
         this.regRepository = regRepository;
+
     }
 
     @Override

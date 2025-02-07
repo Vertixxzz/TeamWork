@@ -8,9 +8,11 @@ public class MyApplication {
     private final IUserController controller;
     private final Scanner scanner = new Scanner(System.in);
 
+
     public MyApplication(IUserController controller) {
         this.controller = controller;
     }
+
 
     private void mainMenu(){
         System.out.println();

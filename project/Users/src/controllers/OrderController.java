@@ -20,6 +20,7 @@ public class OrderController implements IOrderController {
         int newOrderId = orderRepository.getAllOrders().size() + 1; // Генерация ID
         Order order = new Order(newOrderId, customerName, items);
         orderRepository.addOrder(order);
+
     }
 
     @Override

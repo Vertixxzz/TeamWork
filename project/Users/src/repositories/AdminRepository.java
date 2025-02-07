@@ -4,6 +4,7 @@ import data.interfaces.JB;
 import models.User;
 import repositories.interfaces.IAdminRepository;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class AdminRepository implements IAdminRepository {
     public List<User> getUsersByRole(String role) {
         List<User> users = new ArrayList<>();
         try {
+
             Connection connection = database.getConnection();
             String sql = "SELECT * FROM users WHERE role = ?";
             PreparedStatement statement = connection.prepareStatement(sql);

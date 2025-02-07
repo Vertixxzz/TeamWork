@@ -31,6 +31,7 @@ public class RegistrationRepository implements IRegistrationRepository {
         return false;
     }
 
+
     @Override
     public List<Course> getCoursesByUserId(int userId) {
         List<Course> courses = new ArrayList<>();

@@ -12,6 +12,7 @@ public class Order {
     private List<MenuItem> items;
     private double totalPrice;
 
+
     // Конструктор
     public Order(int id, String customerName, List<MenuItem> items) {
         this.id = id;

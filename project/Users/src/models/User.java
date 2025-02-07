@@ -12,6 +12,7 @@ public class User {
     private List<Course> courses;
     private boolean isMentor;
 
+
     public User(int id, String username, String password, String email, String role, int level) {
         this.id = id;
         this.username = username;

@@ -24,6 +24,7 @@ public class UserController implements IUserController {
             return "Wrong password";
         }
         return "Login successful";
+
     }
 
     @Override
