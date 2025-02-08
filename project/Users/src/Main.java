@@ -31,14 +31,14 @@ public class Main {
         IRegistrationRepository regRepo = new RegistrationRepository(database);
         IAdminRepository adminRepo = new AdminRepository(database);
 
-
+        ICurrentUserRepository current_user_repository = new CurrentUserRepository(database)
+        IMenuRepository menu_repository = new MenuRepository(database)
         UserController controller = new UserController(repo);
         CourseController courseController = new CourseController(courseRepo, repo);
         IRegistrationController regController = new RegistrationController(courseRepo, repo, regRepo);
         IAdminController adminController = new AdminController(repo, adminRepo, courseRepo);
 
-        CourseApplication courseApp = new CourseApplication(controller, courseController, regController);
-        AdminApplication adminApplication = new AdminApplication(adminController);
+
         MyApplication app = new MyApplication(controller, courseApp, adminApplication);
         app.start();
         database.close();

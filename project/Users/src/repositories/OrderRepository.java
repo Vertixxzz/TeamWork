@@ -1,7 +1,7 @@
 package repositories.repositories;
 
 import models.Order;
-import repositories.interfaces.IOrderRepository;
+import repositories.repositories.interfaces.IOrderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
