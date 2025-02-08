@@ -24,13 +24,13 @@ public class MenuController implements IMenuController {
     @Override
     public String getMenuById(int id) {
         Menu menu = repo.getMenuById(id);
-        return (movie == null) ? "Menu was not found" : menu.toString();
+        return (menu == null) ? "Menu was not found" : menu.toString();
     }
 
 
     @Override
     public String getAllMenu() {
-        List<Menu> movies = repo.getAllMenu();
+        List<Menu> menues = repo.getAllMenu();
         StringBuilder response = new StringBuilder();
         for(Menu menu: menu){
             response.append(menu.toString()).append("\n");
@@ -61,7 +61,7 @@ public class MenuController implements IMenuController {
     }
 
     @Override
-    public String updateMovie(int menuId, Menu updatedMenu) {
+    public String updateMenu(int menuId, Menu updatedMenu) {
         boolean updated = repo.updateMenu(updatedMenu);
         return updated ? "Menu has been updated" : "Error updating menu";
     }
