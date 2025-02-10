@@ -1,10 +1,8 @@
-package data.interfaceces;
+package data.Interface;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public interface IDB {
-    Connection getConnection();
-    void close();
-
+    Connection getConnection() throws SQLException;
 }
-

@@ -1,68 +1,77 @@
-package repositories.controllers;
+package controller;
 
-import controllers.interfaces.IMenuController;
-import models.CurrentUser;
+import controller.Interface.IMenuController;
 import models.Menu;
-import repositories.interfaces.IMenuRepository;
+import models.Role;
+import models.Category;
+import repositories.MenuRepository;
+import repositories.CurrentUserRepository;
 
-import java.util.List;
+import java.util.Scanner;
 
 public class MenuController implements IMenuController {
-    private final IMenuRepository repo;
+    private MenuRepository menuRepository;
+    private Scanner scanner;
+    private CurrentUserRepository currentUserRepository;
 
-
-    public MenuController(IMenuRepository repo) {
-        this.repo = repo;
+    public MenuController() {
+        menuRepository = new MenuRepository();
+        scanner = new Scanner(System.in);
+        currentUserRepository = CurrentUserRepository.getInstance();
     }
 
     @Override
-    public String createMenu(Menu menu) {
-        boolean created = repo.createMenu(menu);
-        return (created) ? "Dish has been created" : "Dish creation error";
+    public void showMenu() {
+        menuRepository.getAllMenuItems().forEach(item -> {
+            String category = (item.getCategory() != null) ? item.getCategory().getName() : "Без категории";
+            System.out.println("ID: " + item.getId() +
+                    " | " + item.getItemName() +
+                    " | Цена: " + item.getPrice() +
+                    " | Категория: " + category);
+        });
     }
 
     @Override
-    public String getMenuById(int id) {
-        Menu menu = repo.getMenuById(id);
-        return (menu == null) ? "Menu was not found" : menu.toString();
-    }
-
-
-    @Override
-    public String getAllMenu() {
-        List<Menu> menues = repo.getAllMenu();
-        StringBuilder response = new StringBuilder();
-        for(Menu menu: menu){
-            response.append(menu.toString()).append("\n");
+    public void addFoodItem() {
+        // Проверка ролей
+        if (currentUserRepository.getCurrentUser() == null ||
+                !(currentUserRepository.getCurrentUser().getRole() == Role.ADMIN ||
+                        currentUserRepository.getCurrentUser().getRole() == Role.MANAGER)) {
+            System.out.println("У вас нет доступа для добавления блюда.");
+            return;
         }
-        return response.toString();
-    }
 
-    @Override
-    public String addReviewForMenu(int menuId, int userId, String reviewText) {
-        Review review = new Review(menuId, CurrentUser.getCurrentUser().getUser_id(), reviewText);
-        boolean created = reviewRepo.createReview(review);
-        return created ? "Review has been added." : "Error adding review.";
-    }
-
-    @Override
-    public String getReviewsByMenuId(int menuId) {
-        List<Review> reviews = reviewRepo.getReviewsByMenuId(menuId);
-        StringBuilder response = new StringBuilder();
-        for (Review review : reviews) {
-            response.append(review.toString()).append("\n");
+        System.out.print("Введите название блюда: ");
+        String itemName = scanner.nextLine();
+        if (itemName.isEmpty()) {
+            System.out.println("Название блюда не может быть пустым.");
+            return;
         }
-        return response.toString();
-    }
-    @Override
-    public String deleteMenu(int menuId) {
-        boolean deleted = repo.deleteMenu(menuId);
-        return deleted ? "Menu has been deleted" : "Error deleting menu";
-    }
 
-    @Override
-    public String updateMenu(int menuId, Menu updatedMenu) {
-        boolean updated = repo.updateMenu(updatedMenu);
-        return updated ? "Menu has been updated" : "Error updating menu";
+        System.out.print("Введите цену блюда: ");
+        double price;
+        try {
+            price = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Некорректное значение цены.");
+            return;
+        }
+
+        System.out.print("Введите категорию блюда: ");
+        String categoryName = scanner.nextLine();
+        Category category = new Category();
+        category.setName(categoryName);
+
+        Menu menu = new Menu();
+        menu.setItemName(itemName);
+        menu.setPrice(price);
+        menu.setCategory(category);
+
+        boolean success = menuRepository.addMenuItem(menu);
+        if (success) {
+            System.out.println("Блюдо успешно добавлено!");
+        } else {
+            System.out.println("Ошибка при добавлении блюда.");
+        }
     }
 }

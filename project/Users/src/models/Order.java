@@ -2,44 +2,44 @@ package models;
 
 import java.util.List;
 
-/**
- * Модель заказа.
- * Содержит информацию о заказе: ID, имя клиента, список блюд и общую стоимость.
- */
 public class Order {
     private int id;
-    private String customerName;
-    private List<MenuItem> items;
+    private int userId; // Кто разместил заказ
+    private List<OrderItem> orderItems; // Элементы заказа
     private double totalPrice;
 
+    public Order() {}
 
-    // Конструктор
-    public Order(int id, String customerName, List<MenuItem> items) {
+    public Order(int id, int userId, List<OrderItem> orderItems, double totalPrice) {
         this.id = id;
-        this.customerName = customerName;
-        this.items = items;
-        this.totalPrice = calculateTotalPrice();
-    }
-
-    // Метод для расчета общей стоимости заказа
-    private double calculateTotalPrice() {
-        return items.stream().mapToDouble(MenuItem::getPrice).sum();
+        this.userId = userId;
+        this.orderItems = orderItems;
+        this.totalPrice = totalPrice;
     }
 
     // Геттеры и сеттеры
     public int getId() {
         return id;
     }
-
-    public String getCustomerName() {
-        return customerName;
+    public void setId(int id) {
+        this.id = id;
     }
-
-    public List<MenuItem> getItems() {
-        return items;
+    public int getUserId() {
+        return userId;
     }
-
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
     public double getTotalPrice() {
         return totalPrice;
+    }
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

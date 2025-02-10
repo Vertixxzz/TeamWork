@@ -1,7 +1,8 @@
-package repositories.repositories.interfaces;
-import model.User;
+package repositories.Interface;
+
+import models.CurrentUser;
+
 public interface ICurrentUserRepository {
-    User getUserInfo(String name);
-    boolean updateUser(User user);
-    boolean deleteUser(String name);
+    CurrentUser getCurrentUser();
+    void setCurrentUser(CurrentUser currentUser);
 }

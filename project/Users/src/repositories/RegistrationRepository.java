@@ -1,59 +1,44 @@
 package repositories;
 
-import data.interfaces.JB;
+import data.PostgresDB;
 import models.User;
-import models.Course;
-import repositories.interfaces.IRegistrationRepository;
-
+import repositories.Interface.IRegistrationRepository;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RegistrationRepository implements IRegistrationRepository {
-    private final JB database;
+    private PostgresDB db;
 
-    public RegistrationRepository(JB database) {
-        this.database = database;
+    public RegistrationRepository() {
+        db = PostgresDB.getInstance();
     }
-
     @Override
-    public boolean registerForCourse(Long courseId,int userId) {
-        try (Connection connection = database.getConnection()) {
-            String sql = "INSERT INTO student_courses (user_id, course_id) VALUES (?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setLong(1, courseId);
-            stmt.setInt(2, userId);
-            stmt.executeUpdate();
-            return true;
+    public boolean registerUser(User user) {
+        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+        try (Connection conn = db.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
 
-
     @Override
-    public List<Course> getCoursesByUserId(int userId) {
-        List<Course> courses = new ArrayList<>();
-        try (Connection connection = database.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(
-                     "SELECT c.id, c.name FROM courses c " +
-                             "JOIN student_courses sc ON c.id = sc.course_id " +
-                             "WHERE sc.student_id = ?")) {
-            stmt.setInt(1, userId);
-            ResultSet result = stmt.executeQuery();
-            while (result.next()) {
-                courses.add(new
-                        Course(result.getString("name"), result.getString("discription"), result.getLong("id")));
+    public User getUserByUsername(String username) {
+        String query = "SELECT id, username, password FROM users WHERE username = ?";
+        try (Connection conn = db.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return courses;
-    }
-
-    @Override
-    public boolean logoutFromCourse(int userId, Long courseId) {
-        return false;
+        return null;
     }
 }

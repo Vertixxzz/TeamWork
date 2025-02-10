@@ -1,65 +1,31 @@
 package models;
 
-import java.util.List;
-
 public class User {
     private int id;
     private String username;
     private String password;
-    private String email;
-    private String role;
-    private int level;
-    private List<Course> courses;
-    private boolean isMentor;
+    private Role role;
 
+    public User() {}
 
-    public User(int id, String username, String password, String email, String role, int level) {
+    public User(int id, String username, String password, Role role) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.email = email;
         this.role = role;
-        this.level = level;
-        this.isMentor = canBeMentor();
     }
 
-    public int getId() {
-        return id;
+    public User(int id, String username, String password) {
+        this(id, username, password, Role.CUSTOMER);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public boolean isMentor() {
-        return isMentor;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public boolean canBeMentor() {
-        return role.equals("STUDENT") && level > 1;
-    }
+    // Геттеры и сеттеры
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 }

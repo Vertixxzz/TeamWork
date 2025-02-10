@@ -1,46 +1,48 @@
-package controllers;
+package controller;
 
+import controller.Interface.IOrderController;
 import models.Order;
-import models.MenuItem;
-import repositories.repositories.interfaces.IOrderRepository;
-import controllers.interfaces.IOrderController;
+import repositories.OrderRepository;
+import repositories.CurrentUserRepository;
 
 import java.util.List;
-
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class OrderController implements IOrderController {
-    private final IOrderRepository orderRepository;
+    private OrderRepository orderRepository;
+    private CurrentUserRepository currentUserRepository;
+    private Scanner scanner;
 
-    public OrderController(IOrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderController() {
+        orderRepository = new OrderRepository();
+        currentUserRepository = CurrentUserRepository.getInstance();
+        scanner = new Scanner(System.in);
     }
 
     @Override
-    public void createOrder(String customerName, List<MenuItem> items) {
-        int newOrderId = orderRepository.getAllOrders().size() + 1; // Генерация ID
-        Order order = new Order(newOrderId, customerName, items);
-        orderRepository.addOrder(order);
+    public void placeOrder() {
 
+        System.out.print("Введите ID блюда: ");
+        int menuId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Введите количество: ");
+        int quantity = Integer.parseInt(scanner.nextLine());
+        if (quantity <= 0) {
+            System.out.println("Количество должно быть положительным.");
+            return;
+        }
+        // Создание заказа
+        System.out.println("Заказ размещён (пример).");
     }
 
     @Override
-    public Order getOrderById(int orderId) {
-        return orderRepository.getOrderById(orderId);
-    }
+    public void viewOrders() {
 
-    @Override
-    public List<Order> getAllOrders() {
-        return orderRepository.getAllOrders();
-    }
-
-    @Override
-    public void updateOrder(int orderId, String customerName, List<MenuItem> items) {
-        Order order = new Order(orderId, customerName, items);
-        orderRepository.updateOrder(order);
-    }
-
-    @Override
-    public void deleteOrder(int orderId) {
-        orderRepository.deleteOrder(orderId);
+        List<Order> orders = orderRepository.getOrdersByUserId(currentUserRepository.getCurrentUser().getId());
+        List<Order> filtered = orders.stream()
+                .filter(o -> o.getTotalPrice() > 100)
+                .collect(Collectors.toList());
+        System.out.println("Ваши заказы (отфильтрованные):");
+        filtered.forEach(o -> System.out.println("Заказ №" + o.getId() + ", сумма: " + o.getTotalPrice()));
     }
 }

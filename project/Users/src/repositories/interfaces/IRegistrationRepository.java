@@ -1,11 +1,8 @@
-package repositories.interfaces;
+package repositories.Interface;
 
-import models.Course;
-
-import java.util.List;
+import models.User;
 
 public interface IRegistrationRepository {
-    boolean registerForCourse(Long courseId, int userId);
-    List<Course> getCoursesByUserId(int userId);
-    boolean logoutFromCourse(int userId, Long courseId);
+    boolean registerUser(User user);
+    User getUserByUsername(String username);
 }

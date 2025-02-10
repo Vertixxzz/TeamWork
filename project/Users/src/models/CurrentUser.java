@@ -1,31 +1,39 @@
-package repositories.models;
+package models;
 
-public class CurrentUser extends User{
-    private static CurrentUser intance;
+public class CurrentUser {
+    private int id;
+    private String username;
+    private Role role;
 
-    private CurrentUser(int user_id, String user_name, int user_age, boolean user_gender, int genre_id, String password) {
-        super(user_id, user_name, user_age, user_gender, genre_id, password);
+    public CurrentUser() {}
+
+    public CurrentUser(int id, String username, Role role) {
+        this.id = id;
+        this.username = username;
+        this.role = role;
     }
 
-    public static void setCurrentUser(User user){
-        if(user != null) {
-            instance = new CurrentUser(
-                    user.getUser_id(),
-                    user.getUser_name(),
-                    user.getUser_age(),
-                    user.getUser_gender(),
-                    user.getPassword());
-        }else{
-            instance = null;
-            System.out.println("Error: user was not saved")
-        }
-    }
-    public static User getCurrentUser(){
-        return instance;
+    public CurrentUser(int id, String username) {
+        this(id, username, Role.CUSTOMER);
     }
 
-    @Override
-    public static boolean isLogged(){
-        return instance != null;
+    // Геттеры и сеттеры
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -1,8 +1,5 @@
-package controllers.interfaces;
+package controller.Interface;
 
 public interface IRegistrationController {
-    String registerForCourse(Long courseId, String email);
-    String getAllCoursesByUserEmail(String email);
-    String logoutFromCourse(String email, Long courseId);
-    String getStudentFullInfo(int studentId);
+    void register();
 }

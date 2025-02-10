@@ -1,109 +1,84 @@
-import controllers.interfaces.IUserController;
-import repositories.interfaces.IUserRepository;
-
-import java.util.InputMismatchException;
+import controller.MenuController;
+import controller.OrderController;
+import controller.RegistrationController;
+import controller.UserController;
+import controller.SeatController;
 import java.util.Scanner;
 
 public class MyApplication {
-    private final IUserController controller;
-    private final Scanner scanner = new Scanner(System.in);
+    private UserController userController;
+    private RegistrationController registrationController;
+    private MenuController menuController;
+    private OrderController orderController;
+    private SeatController seatController;
+    private Scanner scanner;
 
-
-    public MyApplication(IUserController controller) {
-        this.controller = controller;
+    public MyApplication() {
+        userController = new UserController();
+        registrationController = new RegistrationController();
+        menuController = new MenuController();
+        orderController = new OrderController();
+        seatController = new SeatController();
+        scanner = new Scanner(System.in);
     }
 
+    public void run() {
+        int choice = -1;
+        do {
+            System.out.println("\n=== Ресторанное приложение ===");
+            System.out.println("1. Регистрация");
+            System.out.println("2. Вход");
+            System.out.println("3. Просмотр меню");
+            System.out.println("4. Размещение заказа");
+            System.out.println("5. Просмотр заказов");
+            System.out.println("6. Добавить блюдо");
+            System.out.println("7. Просмотр и бронирование мест");
+            System.out.println("0. Выход");
+            System.out.print("Ваш выбор: ");
 
-    private void mainMenu(){
-        System.out.println();
-        System.out.println("Welcome to My Application");
-        System.out.println("Select one of the following options:");
-        System.out.println("1. All users");
-        System.out.println("2. Get user by id");
-        System.out.println("3. Create new user");
-        System.out.println("4. Get dish menu");
-        System.out.println("5. Add new dish in menu");
-        System.out.println("6. Delete dish")
-        System.out.println("0. Exit");
-        System.out.println();
-        System.out.print("Select an option (1-3): ");
-    }
-
-    public void start(){
-        while(true){
-            mainMenu();
-            try{
-                int option = scanner.nextInt();
-                switch(option){
-                    case 1: getAllUsersMenu(); break;
-                    case 2: getUserByIdMenu(); break;
-                    case 3: createUserMenu(); break;
-                    case 4; getDishMenu(); break;
-                    case 5; addDishInMenu(); break;
-                    default:return;
-                }
-            }catch (InputMismatchException e){
-                System.out.println("Please enter a valid option!" + e);
-                scanner.nextLine(); //to ignore incorrect input
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Очистка буфера
+            } else {
+                System.out.println("Введите корректное число.");
+                scanner.nextLine();
+                continue;
             }
-            System.out.println("----------------------------------------");
-        }
-    }
 
-    private void createUserMenu() {
-        System.out.println("Please enter name: ");
-        String name = scanner.next();
-        System.out.println("Please enter surname: ");
-        String surname = scanner.next();
-        System.out.println("Please enter gender (male/female): ");
-        String gender = scanner.next();
-
-        String response = controller.createUser(name, surname, gender);
-        System.out.println(response);
-    }
-
-    private void getUserByIdMenu() {
-        System.out.println("Please enter a user id: ");
-        int id = scanner.nextInt();
-
-        String response = controller.getUserById(id);
-        System.out.println(response);
-    }
-
-    private void getAllUsersMenu() {
-        String response = controller.getAllUsers();
-        System.out.println(response);
-    }
-    private void getDishMenu() {
-        String response = controller.getDishMenu();
-        System.out.println(response);
-        System.out.println("Please chose dish(1-10): ");
-        int id = scaner.nextInt();
-
-        String responce = controller.getDishById(id);
-        System.out.println(responce)
-    }
-
-    private void addDishInMenu(){
-        System.out.println("Please enter name of dish: ");
-        String nameDish = scanner.next();
-        System.out.println("Please enter type of dish: ");
-        String typeDish = scanner.next();
-        System.out.println("Please enter the price: ");
-        String priceDish = scanner.next();
-
-        String response = controller.createUser(nameDish, typeDish, priceDish);
-        System.out.println(response);
-    }
-    private void deleteDish() {
-        String response = controller.deleteDish();
-        System.out.println(response);
-        System.out.println("Please chose dish id: ");
-        int id = scaner.nextInt();
-
-        String responce = controller.deleteDishById(id);
-        System.out.println(responce)
+            switch (choice) {
+                case 1:
+                    registrationController.register();
+                    break;
+                case 2:
+                    userController.login();
+                    break;
+                case 3:
+                    menuController.showMenu();
+                    break;
+                case 4:
+                    orderController.placeOrder();
+                    break;
+                case 5:
+                    orderController.viewOrders();
+                    break;
+                case 6:
+                    menuController.addFoodItem();
+                    break;
+                case 7:
+                    seatController.showSeats();
+                    System.out.print("Вы хотите забронировать место? (Да/Нет): ");
+                    String response = scanner.nextLine();
+                    if (response.equalsIgnoreCase("Да")) {
+                        seatController.reserveSeat();
+                    }
+                    break;
+                case 0:
+                    System.out.println("Выход из приложения.");
+                    break;
+                default:
+                    System.out.println("Неверный выбор.");
+                    break;
+            }
+        } while (choice != 0);
     }
 }
