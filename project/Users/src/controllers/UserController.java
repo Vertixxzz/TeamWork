@@ -27,12 +27,13 @@ public class UserController implements IUserController {
 
         User user = registrationRepository.getUserByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            CurrentUser currentUser = new CurrentUser(user.getId(), user.getUsername());
+            CurrentUser currentUser = new CurrentUser(user.getId(), user.getUsername(), user.getRole());
             currentUserRepository.setCurrentUser(currentUser);
-            System.out.println("Пользователь " + username + " успешно вошёл в систему.");
+            System.out.println("Пользователь " + username + " успешно вошёл в систему. Роль: " + user.getRole());
         } else {
             System.out.println("Неверное имя пользователя или пароль.");
         }
+
     }
 
     @Override

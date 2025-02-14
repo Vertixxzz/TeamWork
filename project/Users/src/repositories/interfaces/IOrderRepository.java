@@ -4,6 +4,8 @@ import models.Order;
 import java.util.List;
 
 public interface IOrderRepository {
-    List<Order> getOrdersByUserId(int userId);
     boolean createOrder(Order order);
+    List<Order> getOrdersByUserId(int userId);
+
+    boolean deleteOrder(int orderId);
 }

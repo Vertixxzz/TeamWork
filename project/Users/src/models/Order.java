@@ -7,6 +7,7 @@ public class Order {
     private int userId;
     private List<OrderItem> orderItems;
     private double totalPrice;
+    private String dishNames;
 
     public Order() {}
 
@@ -15,6 +16,14 @@ public class Order {
         this.userId = userId;
         this.orderItems = orderItems;
         this.totalPrice = totalPrice;
+    }
+
+    public String getDishNames() {
+        return dishNames;
+    }
+
+    public void setDishNames(String dishNames) {
+        this.dishNames = dishNames;
     }
 
     // Геттеры и сеттеры

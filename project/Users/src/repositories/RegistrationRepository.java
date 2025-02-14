@@ -2,8 +2,10 @@ package repositories;
 
 import data.PostgresDB;
 import models.User;
+import models.Role; // Добавьте этот импорт!
 import repositories.Interface.IRegistrationRepository;
 import java.sql.*;
+
 
 public class RegistrationRepository implements IRegistrationRepository {
     private PostgresDB db;
@@ -26,19 +28,37 @@ public class RegistrationRepository implements IRegistrationRepository {
         return false;
     }
 
-    @Override
     public User getUserByUsername(String username) {
-        String query = "SELECT id, username, password FROM users WHERE username = ?";
+        String query = "SELECT id, username, password, role FROM users WHERE username = ?";
         try (Connection conn = db.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
+                // Создаём пользователя
+                User user = new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password")
+                );
+                // Вытаскиваем роль из ResultSet
+                String dbRole = rs.getString("role");
+                if (dbRole != null) {
+                    // Сопоставляем строку с enum Role
+                    if (dbRole.equalsIgnoreCase("ADMIN")) {
+                        user.setRole(Role.ADMIN);
+                    } else if (dbRole.equalsIgnoreCase("MANAGER")) {
+                        user.setRole(Role.MANAGER);
+                    } else {
+                        user.setRole(Role.CUSTOMER);
+                    }
+                }
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 }

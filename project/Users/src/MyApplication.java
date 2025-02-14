@@ -33,6 +33,7 @@ public class MyApplication {
             System.out.println("5. Просмотр заказов");
             System.out.println("6. Добавить блюдо");
             System.out.println("7. Просмотр и бронирование мест");
+            System.out.println("8. Удалить заказ"); // Новый пункт
             System.out.println("0. Выход");
             System.out.print("Ваш выбор: ");
 
@@ -72,6 +73,9 @@ public class MyApplication {
                         seatController.reserveSeat();
                     }
                     break;
+                case 8:
+                    orderController.deleteOrder();
+                    break;
                 case 0:
                     System.out.println("Выход из приложения.");
                     break;
@@ -81,4 +85,5 @@ public class MyApplication {
             }
         } while (choice != 0);
     }
+
 }
