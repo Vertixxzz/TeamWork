@@ -22,16 +22,23 @@ public class OrderController implements IOrderController {
 
     @Override
     public void placeOrder() {
+        // Проверяем, что пользователь вошёл в систему
+        if (currentUserRepository.getCurrentUser() == null) {
+            System.out.println("Сначала войдите в систему.");
+            return;
+        }
 
         System.out.print("Введите ID блюда: ");
         int menuId = Integer.parseInt(scanner.nextLine());
         System.out.print("Введите количество: ");
         int quantity = Integer.parseInt(scanner.nextLine());
+
         if (quantity <= 0) {
             System.out.println("Количество должно быть положительным.");
             return;
         }
-        // Создание заказа
+
+        // Создание заказа (здесь можно добавить дополнительную логику)
         System.out.println("Заказ размещён (пример).");
     }
 
@@ -45,4 +52,9 @@ public class OrderController implements IOrderController {
         System.out.println("Ваши заказы (отфильтрованные):");
         filtered.forEach(o -> System.out.println("Заказ №" + o.getId() + ", сумма: " + o.getTotalPrice()));
     }
+
+
+
+
+
 }

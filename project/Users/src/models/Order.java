@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Order {
     private int id;
-    private int userId; // Кто разместил заказ
-    private List<OrderItem> orderItems; // Элементы заказа
+    private int userId;
+    private List<OrderItem> orderItems;
     private double totalPrice;
 
     public Order() {}
