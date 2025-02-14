@@ -33,7 +33,7 @@ public class SeatController {
         System.out.println("===================");
     }
 
-
+//DATA VALIDATION
     public void reserveSeat() {
         CurrentUser currentUser = currentUserRepository.getCurrentUser();
         if (currentUser == null) {
@@ -49,6 +49,7 @@ public class SeatController {
         boolean success = seatRepository.reserveSeatByNumber(seatNumber, currentUser.getId());
         if (success) {
             System.out.println("Место " + seatNumber + " успешно забронировано!");
+            //DATA VALIDATION
         } else {
             System.out.println("Не удалось забронировать место. Возможно, оно уже занято.");
         }

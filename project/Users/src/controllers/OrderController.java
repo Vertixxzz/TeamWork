@@ -26,12 +26,15 @@ public class OrderController implements IOrderController {
 
     @Override
     public void viewOrders() {
+
         if (currentUserRepository.getCurrentUser() == null) {
             System.out.println("Сначала войдите в систему.");
             return;
         }
         List<Order> orders = orderRepository.getOrdersByUserId(currentUserRepository.getCurrentUser().getId());
         System.out.println("Ваши заказы:");
+
+        //Короткая ЛЯМБДА ВЫРАЖЕНИЕ
         orders.forEach(o -> System.out.println("Заказ №" + o.getId() +
                 ", сумма: " + o.getTotalPrice() +
                 ", блюда: " + o.getDishNames()));

@@ -3,7 +3,7 @@ package repositories;
 import repositories.Interface.IOrderRepository;
 import repositories.Interface.IMenuRepository;
 import repositories.Interface.IRegistrationRepository;
-
+// Главный ФАКТОРИ который используется для создания экземпляров различных репозиториев
 public class RepositoryFactory {
 
     public static IOrderRepository getOrderRepository() {

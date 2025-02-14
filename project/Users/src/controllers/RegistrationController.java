@@ -25,6 +25,7 @@ public class RegistrationController implements IRegistrationController {
         boolean success = registrationRepository.registerUser(user);
         if (success) {
             System.out.println("Регистрация успешна!");
+            //DATA VALIDATION
         } else {
             System.out.println("Ошибка регистрации.");
         }

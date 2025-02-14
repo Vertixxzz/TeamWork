@@ -31,6 +31,7 @@ public class UserController implements IUserController {
             currentUserRepository.setCurrentUser(currentUser);
             System.out.println("Пользователь " + username + " успешно вошёл в систему. Роль: " + user.getRole());
         } else {
+            //DATA VALIDATION
             System.out.println("Неверное имя пользователя или пароль.");
         }
 

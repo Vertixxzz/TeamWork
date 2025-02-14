@@ -22,6 +22,7 @@ public class MenuController implements IMenuController {
 
     @Override
     public void showMenu() {
+        //ЛЯМБДА ВЫРАЖЕНИЕ для вывода информаций в консоль
         menuRepository.getAllMenuItems().forEach(item -> {
             String category = (item.getCategory() != null) ? item.getCategory().getName() : "Без категории";
             System.out.println("ID: " + item.getId() +

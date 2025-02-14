@@ -15,7 +15,7 @@ public class OrderRepository implements IOrderRepository {
     public OrderRepository() {
         db = PostgresDB.getInstance();
     }
-
+//Полное описание(JOIN)
     public Order getFullOrderDescription(int orderId) {
         Order order = null;
         String query = "SELECT o.id as order_id, o.user_id, o.total_price, " +
@@ -139,7 +139,7 @@ public class OrderRepository implements IOrderRepository {
         }
         return false;
     }
-
+//Соеденяет несколько информаций из БД (JOIN)
     @Override
     public List<Order> getOrdersByUserId(int userId) {
         List<Order> orders = new ArrayList<>();

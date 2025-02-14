@@ -3,6 +3,8 @@ package repositories;
 import models.CurrentUser;
 import repositories.Interface.ICurrentUserRepository;
 
+//СИНГЛТОН для поддерживания пользователя в единственном экземпляре
+
 public class CurrentUserRepository implements ICurrentUserRepository {
 
     private static CurrentUserRepository instance;
